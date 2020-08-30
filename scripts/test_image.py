@@ -15,11 +15,11 @@ from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
 # Define the image
-img = cv2.imread("data/p1.jpg")
+img = cv2.imread("data/p8.jpg")
 
 # What model to download.
 # Models can bee found here: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
-MODEL_NAME = 'ssd_inception_v2_coco_2017_11_17'
+MODEL_NAME = 'legacy/inference_graph'
 '''MODEL_FILE = MODEL_NAME + '.tar.gz'
 DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 '''
@@ -28,10 +28,10 @@ DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
+PATH_TO_LABELS = os.path.join('legacy/data', 'label_map.pbtxt')
 
 # Number of classes to detect
-NUM_CLASSES = 90
+NUM_CLASSES = 2
 
 '''
 # Download Model
