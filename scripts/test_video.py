@@ -106,8 +106,31 @@ with detection_graph.as_default():
                 use_normalized_coordinates=True,
                 line_thickness=8)
 
+
+            # If score of detected object is bigger than 0.5
+            # means API draws bounding box on image
+            # Print detected object coordinates
+            # Print detected object class
+            height = image_np.shape[0]
+            width = image_np.shape[1]
+            
+            for i in range(len(boxes[0])):
+                if np.squeeze(scores)[i] > 0.5:
+                    print(np.squeeze(scores)[i])
+                    ymin = (int(boxes[0][i][0]*height))
+                    xmin = (int(boxes[0][i][1]*width))
+                    ymax = (int(boxes[0][i][2]*height))
+                    xmax = (int(boxes[0][i][3]*width))
+                    print(ymin,xmin,ymax,xmax)
+
+                    class_name = category_index[np.squeeze(classes).astype(np.int32)[i]]['name']
+                    display_str = str(class_name)
+                    print(display_str)
+
+
             # Display output
-            cv2.imshow('object detection', cv2.resize(image_np, (800, 600)))
+            #cv2.imshow('object detection', cv2.resize(image_np, (800, 600)))
+            cv2.imshow('object detection', image_np)
 
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()

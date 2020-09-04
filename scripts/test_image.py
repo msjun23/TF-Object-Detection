@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import six
 import six.moves.urllib as urllib
 import sys
 import tarfile
@@ -15,7 +16,8 @@ from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
 # Define the image
-img = cv2.imread("data/p8.jpg")
+img = cv2.imread("data/p1.jpg")
+img = cv2.resize(img, (800,600))
 
 # What model to download.
 # Models can bee found here: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
@@ -88,6 +90,7 @@ with detection_graph.as_default():
         # Extract number of detectionsd
         num_detections = detection_graph.get_tensor_by_name(
             'num_detections:0')
+
         # Actual detection.
         (boxes, scores, classes, num_detections) = sess.run(
             [boxes, scores, classes, num_detections],
@@ -102,8 +105,31 @@ with detection_graph.as_default():
             use_normalized_coordinates=True,
             line_thickness=8)
 
-        # Display output
-        cv2.imshow('object detection', cv2.resize(img, (800,600)))
+
+        # If score of detected object is bigger than 0.5
+        # means API draws bounding box on image
+        # Print detected object coordinates
+        # Print detected object class
+        height = img.shape[0]
+        width = img.shape[1]
         
+        for i in range(len(boxes[0])):
+            if np.squeeze(scores)[i] > 0.5:
+                print(np.squeeze(scores)[i])
+                ymin = (int(boxes[0][i][0]*height))
+                xmin = (int(boxes[0][i][1]*width))
+                ymax = (int(boxes[0][i][2]*height))
+                xmax = (int(boxes[0][i][3]*width))
+                print(ymin,xmin,ymax,xmax)
+
+                class_name = category_index[np.squeeze(classes).astype(np.int32)[i]]['name']
+                display_str = str(class_name)
+                print(display_str)
+
+
+        # Display output
+        #cv2.imshow('object detection', cv2.resize(img, (800,600)))
+        cv2.imshow('object detection', img)
+
         cv2.waitKey()
         cv2.destroyAllWindows()
