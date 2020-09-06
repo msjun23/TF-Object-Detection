@@ -122,7 +122,7 @@ with detection_graph.as_default():
                     ymax = (int(boxes[0][i][2]*height))
                     xmax = (int(boxes[0][i][3]*width))
                     print('Image boundary: ', ymin,xmin,ymax,xmax)
-                    print('Center coordinate: ', (xmin+xmax)/2, (ymin+ymin)/2)
+                    print('Center coordinate: ', (xmin+xmax)/2, (ymin+ymax)/2)
 
                     class_name = category_index[np.squeeze(classes).astype(np.int32)[i]]['name']
                     display_str = str(class_name)
