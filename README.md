@@ -1,4 +1,4 @@
-# TF-Object-Detection
+# TF-Pedestrian-Car-Detection
 Pedestrian and car detection with tensorflow for Self Driving Car
 
 
